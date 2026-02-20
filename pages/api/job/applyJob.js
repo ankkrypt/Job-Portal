@@ -46,7 +46,6 @@ const applyToJob =  async (req, res) => {
         const form = new formidable.IncomingForm();
         form.parse(req, async (err, fields, files) => {
             if (err) {
-                console.error('Error', err)
                 throw err
             }
 
@@ -99,7 +98,6 @@ const applyToJob =  async (req, res) => {
         })
     } catch (error) {
 
-        console.log('error in apply job (server) => ', error);
         return res.status(500).json({ success: false, message: 'something went wrong please retry login !' });
     }
 

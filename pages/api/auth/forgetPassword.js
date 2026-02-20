@@ -26,7 +26,6 @@ export default async (req, res) => {
         return res.status(201).json({ success: true, message: "Password Updated Successfully"  });
         
     } catch (error) {
-        console.log('Error in forget Password (server) => ', error);
         return res.status(500).json({ success: false, message: "Something Went Wrong Please Retry Later !" })
     }
 }

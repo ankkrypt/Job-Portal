@@ -35,7 +35,6 @@ const getAllJobs = async (req, res) => {
             totalPages: Math.ceil(total / limit)
         });
     } catch (error) {
-        console.log('Error in getting a job (server) => ', error);
         return res.status(500).json({ success: false, message: "Something Went Wrong Please Retry login  !" });
     }
 }

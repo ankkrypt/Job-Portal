@@ -51,7 +51,6 @@ export const bookmark_my_job = async (req, res) => {
         const bookmarkingJob = await bookMarkJob.create({ job, user });
         return res.status(200).json({ success: true, message: "Job Bookmarked successfully !" })
     } catch (error) {
-        console.log('Error in booking marking a job (server) => ', error);
         return res.status(500).json({ success: false, message: "Something Went Wrong Please Retry login !" })
     }
 }
@@ -65,7 +64,6 @@ export const getBookmark_jobs = async (req, res) => {
         const getBookMark = await bookMarkJob.find({ user: userId }).populate('job').populate('user')
         return res.status(200).json({ success: true, message: "Job Bookmarked successfully !", data: getBookMark })
     } catch (error) {
-        console.log('Error in getting book mark Job (server) => ', error);
         return res.status(500).json({ success: false, message: "Something Went Wrong Please Retry Later !" })
     }
 }
@@ -80,7 +78,6 @@ export const delete_bookmark_job = async (req, res) => {
         const deleteBookmark = await bookMarkJob.findByIdAndDelete(id)
         return res.status(200).json({ success: true, message: "Job removed successfully !" })
     } catch (error) {
-        console.log('Error in deleting book mark Job (server) => ', error);
         return res.status(500).json({ success: false, message: "Something Went Wrong Please Retry Later !" })
     }
 }

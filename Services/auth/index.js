@@ -11,7 +11,6 @@ export const register_me = async (formData) => {
         const data = res.json();
         return data;
     } catch (error) {
-        console.log('error in register (service) => ', error);
     }
 }
 
@@ -27,7 +26,6 @@ export const login_me = async (formData) => {
         const data = res.json();
         return data;
     } catch (error) {
-        console.log('error in login (service) => ', error);
     }
 }
 
@@ -45,7 +43,6 @@ export const forget_password = async (formData) => {
         const data = res.json();
         return data;
     } catch (error) {
-        console.log('error in forget Password (service) => ', error);
     }
 }
 
