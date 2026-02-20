@@ -101,7 +101,7 @@ export default function DisplayJobs() {
                     {isReachingEnd && jobs.length > 0 && (
                         <div className='text-center py-12'>
                             <div className='inline-block px-8 py-4 bg-white rounded-lg border-2 border-dashed border-gray-300'>
-                                <p className='text-lg font-semibold text-gray-700'>✨ You've reached the end of the list!</p>
+                                <p className='text-lg font-semibold text-gray-700'>✨ You&apos;ve reached the end of the list!</p>
                                 <p className='text-gray-600 mt-1'>More jobs coming soon</p>
                             </div>
                         </div>
