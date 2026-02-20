@@ -26,6 +26,18 @@ export default function Home() {
 
 
   useEffect(() => {
+    // Restore user from localStorage on page load
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        dispatch(setUserData(userData));
+      } catch (error) {
+        localStorage.removeItem('user');
+      }
+    }
+
+    // Also check token
     if (token) {
       dispatch(setUserToken(token))
     }
