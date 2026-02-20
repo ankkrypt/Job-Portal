@@ -98,6 +98,7 @@ export default function NavBar() {
                     <Link href={'/frontend/displayJobs'} className="px-4 py-2 text-base font-medium transition-all duration-300 hover:bg-gray-100 rounded-lg" >View Jobs</Link>
                     <Link href={'/frontend/postedJob'} className="px-4 py-2 text-base font-medium transition-all duration-300 hover:bg-gray-100 rounded-lg" >Posted Jobs</Link>
                     <Link href={'/frontend/dashboard'} className="px-4 py-2 text-base font-medium transition-all duration-300 hover:bg-gray-100 rounded-lg" >Dashboard</Link>
+                    {user && <Link href={'/frontend/chat'} className="px-4 py-2 text-base font-medium transition-all duration-300 hover:bg-gray-100 rounded-lg" >Messages</Link>}
                 </div>
                 <div className='h-full hidden items-center justify-center lg:flex gap-4' >
                     {
@@ -145,6 +146,7 @@ export default function NavBar() {
                                     </>
                                 }
                                 <Link href={'/frontend/dashboard'} onClick={() => setIsOpen(false)} className="px-4 py-2 w-full text-base font-medium transition-all duration-300 hover:bg-gray-100 rounded-lg text-center" >Dashboard</Link>
+                                {user && <Link href={'/frontend/chat'} onClick={() => setIsOpen(false)} className="px-4 py-2 w-full text-base font-medium transition-all duration-300 hover:bg-gray-100 rounded-lg text-center" >Messages</Link>}
                                 <Link href={'/'} onClick={() => setIsOpen(false)} className="px-4 py-2 w-full text-base font-medium transition-all duration-300 hover:bg-gray-100 rounded-lg text-center" >Contact</Link>
                             </div>
                             <div className='px-4 w-full flex items-center justify-center flex-col gap-2 border-t border-gray-200 py-4'>
