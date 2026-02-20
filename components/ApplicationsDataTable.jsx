@@ -48,8 +48,8 @@ export default function ApplicationsDataTable({ application }) {
         }
     }
 
-    const handleDownloadCV = async (name) => {
-        const fileUrl = `/uploads/${name}`;
+    const handleDownloadCV = async (cvValue) => {
+        const fileUrl = cvValue?.startsWith('http') ? cvValue : `/uploads/${cvValue}`;
         const link = document.createElement('a');
         link.href = fileUrl;
         link.download = 'cv.pdf';

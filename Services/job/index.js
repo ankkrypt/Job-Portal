@@ -53,12 +53,15 @@ export const get_specified_job = async (id) => {
 
 // apply  job api
 
-export const apply_job = async (formData) => {
+export const apply_job = async (payload) => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/job/applyJob`, {
             method: 'POST',
-            headers : {'Authorization': `Bearer ${Cookies.get('token')}`},
-            body: formData,
+            headers : {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('token')}`,
+            },
+            body: JSON.stringify(payload),
         });
         const data = await res.json();
         return data;

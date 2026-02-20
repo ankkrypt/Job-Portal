@@ -2,6 +2,7 @@ import NavBar from '@/components/NavBar';
 import { apply_job } from '@/Services/job';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
+import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +15,9 @@ export default function ApplyJob() {
     const [formikData, setFormikData] = useState({ name: '', email: activeUser?.email , about: '', job: id, user: activeUser?._id })
     const [file, setFile] = useState(null)
     const [error, setError] = useState({ name: '', email: "", about: '', job: '', user: '', cv: '' });
+
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+    const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 
 
     const { name, email, about, job, user } = formikData;
@@ -58,19 +62,54 @@ export default function ApplyJob() {
             return;
         }
 
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+            setError({ ...error, cv: "File size must be 5MB or less" })
+            return;
+        }
 
+        const token = Cookies.get('token');
+        if (!token) {
+            return toast.error('Please Login First')
+        }
 
+        const presignRes = await fetch(`${API_BASE_URL}/api/uploads/presignCv`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                fileName: file.name,
+                contentType: file.type,
+                fileSize: file.size,
+            }),
+        });
 
-        const form = new FormData();
-        form.append('name', name);
-        form.append('email', email);
-        form.append('about', about);
-        form.append('job', job);
-        form.append('user', user);
-        form.append('cv', file);
+        const presignData = await presignRes.json();
+        if (!presignData?.success) {
+            return toast.error(presignData?.error || 'Failed to prepare upload')
+        }
 
+        const uploadRes = await fetch(presignData.uploadUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': file.type,
+            },
+            body: file,
+        });
 
-        const res = await apply_job(form);
+        if (!uploadRes.ok) {
+            return toast.error('Upload failed. Please try again.')
+        }
+
+        const res = await apply_job({
+            name,
+            email,
+            about,
+            job,
+            user,
+            cv: presignData.fileUrl,
+        });
         if (res.success) {
             toast.success('Your Application is Submitted , Redirecting ... ')
             setTimeout(() => {

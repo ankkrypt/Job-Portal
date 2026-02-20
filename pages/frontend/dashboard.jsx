@@ -22,6 +22,8 @@ export default function Dashboard() {
   const dispatch = useDispatch();
 
   const activeUser = useSelector(state => state?.User?.userData)
+  const appliedJobs = useSelector(state => state?.AppliedJob?.appliedJob) || []
+  const bookmarkedJobs = useSelector(state => state?.AppliedJob?.bookMark) || []
   const id = activeUser?._id
 
   useEffect(() => {
@@ -34,8 +36,9 @@ export default function Dashboard() {
 
 
   useEffect(() => {
+    if (!id) return;
     fetchAppliedJobs()
-  }, [])
+  }, [id])
 
 
   const fetchAppliedJobs = async () => {
@@ -73,7 +76,7 @@ export default function Dashboard() {
                   <GiSuitcase className='bg-gray-50 text-indigo-600 rounded-full w-10 h-10' />
                   <div className='flex  flex-col mx-2 items-start justify-start px-2 '>
                     <p className='text-xl font-semibold'>Total Applied</p>
-                    <p className='text-lg font-semibold'>50+</p>
+                    <p className='text-lg font-semibold'>{appliedJobs.length}</p>
                   </div>
                 </div>
 
@@ -82,7 +85,7 @@ export default function Dashboard() {
                   <BsFillBookmarkStarFill className='bg-gray-50 text-indigo-600 rounded-full w-10 h-10' />
                   <div className='flex  flex-col items-start mx-2 justify-start px-2 '>
                     <p className='text-xl font-semibold'>Save Jobs</p>
-                    <p className='text-lg font-semibold'>50+</p>
+                    <p className='text-lg font-semibold'>{bookmarkedJobs.length}</p>
                   </div>
                 </div>
 
